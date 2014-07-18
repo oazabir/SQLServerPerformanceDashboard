@@ -1,0 +1,12 @@
+E:\github\SQLServerDashboard\SQLServerDashboard\bin\SQLServerDashboard.dll.config
+E:\github\SQLServerDashboard\SQLServerDashboard\bin\SQLServerDashboard.dll
+E:\github\SQLServerDashboard\SQLServerDashboard\bin\SQLServerDashboard.pdb
+E:\github\SQLServerDashboard\SQLServerDashboard\obj\Debug\SQLServerDashboard.csprojResolveAssemblyReference.cache
+E:\github\SQLServerDashboard\SQLServerDashboard\obj\Debug\SQLServerDashboard.dll
+E:\github\SQLServerDashboard\SQLServerDashboard\obj\Debug\SQLServerDashboard.pdb
+E:\GitHub\SQLServerDashboard\Source\SQLServerDashboard\bin\SQLServerDashboard.dll.config
+E:\GitHub\SQLServerDashboard\Source\SQLServerDashboard\bin\SQLServerDashboard.dll
+E:\GitHub\SQLServerDashboard\Source\SQLServerDashboard\bin\SQLServerDashboard.pdb
+E:\GitHub\SQLServerDashboard\Source\SQLServerDashboard\obj\Debug\SQLServerDashboard.csprojResolveAssemblyReference.cache
+E:\GitHub\SQLServerDashboard\Source\SQLServerDashboard\obj\Debug\SQLServerDashboard.dll
+E:\GitHub\SQLServerDashboard\Source\SQLServerDashboard\obj\Debug\SQLServerDashboard.pdb

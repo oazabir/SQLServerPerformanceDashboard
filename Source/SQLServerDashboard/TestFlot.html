@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.simplemodal.js"></script>
+    <script src="js/jquery.flot.js"></script>
+    <style>
+        .demo-container {
+            box-sizing: border-box;
+            width: 400px;
+            height: 300px;
+            /*padding: 20px 15px 15px 15px;
+            margin: 15px auto 30px auto;*/
+            border: 1px solid #ddd;
+            background: #fff;
+            background: linear-gradient(#f6f6f6 0, #fff 50px);
+            background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
+            background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
+            background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
+            background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            -o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            -ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            -moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            -webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .demo-placeholder {
+            width: 100%;
+            height: 100%;
+            font-size: 14px;
+            line-height: 1.2em;
+        }
+        .legend table {
+            border-spacing: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h3>UTC</h3>
+    <div class="demo-container" style="height: 300px;">
+        <div id="placeholder1" class="demo-placeholder"></div>
+    </div>
+
+    <h3>Browser</h3>
+    <div class="demo-container" style="height: 300px;">
+        <div id="placeholder2" class="demo-placeholder"></div>
+    </div>
+
+    <h3>Chicago</h3>
+    <div class="demo-container" style="height: 300px;">
+        <div id="placeholder3" class="demo-placeholder"></div>
+    </div>
+
+    <h3>Chicago</h3>
+    <div class="demo-container" style="height: 300px;">
+        <div id="placeholder4" class="demo-placeholder"></div>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            var datasets = {
+                "Batch Requests/sec": {
+                    label: "Batch Requests/sec",
+                    data: initData(30),
+                    color: 0
+                },
+                "Full Scans/sec": {
+                    label: "Full Scans/sec",
+                    data: initData(30),
+                    color: 1
+                },
+                "SQL Compilations/sec": {
+                    label: "SQL Compilations/sec",
+                    data: initData(30),
+                    color: 2
+                },
+                "Transactions/sec": {
+                    label: "Transactions/sec",
+                    data: initData(30),
+                    color: 3
+                }
+            };
+
+            var plots = [];
+            function initData(count) {
+                var data = [];
+                for (var i = 0; i < count; i++)
+                    data.push(0);
+                return data;
+            }
+
+            function updatePlot() {
+                var index = 0;
+
+                $.each(datasets, function (key, val) {
+
+                    var items = [];
+                    for (var i = 0; i < val.data.length; i++)
+                        items.push([i, val.data[i]]);
+
+                    var data = { label: val.label, color: val.color, data: items };
+
+                    if (plots[index] != null) {
+                        plot = plots[index];
+                        plot.setData(data);
+                        plot.draw();
+                    }
+                    else {
+                        var plot = $.plot("#placeholder" + (index + 1), [data], {
+                            series: {
+                                shadowSize: 2	// Drawing is faster without shadows
+                            },
+                            yaxis: {
+                                min: 0,
+                                max: 100
+                            },
+                            xaxis: {
+                                show: true
+                            }
+                        });
+                        //plot.draw();
+                        plots[index] = plot;
+                    }
+                    ++index;
+                });
+            }
+
+            updatePlot();
+        });
+    </script>
+
+
+</body>
+</html>
