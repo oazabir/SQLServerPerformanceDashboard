@@ -17,6 +17,7 @@ cmd /c $compressor a -tzip $zipname $folder -r
 cmd /c copy $zipname ..\Binary\ /Y
 
 cd ..
+git pull
 git add -A *.*
 git commit -a -m $comment
 git push origin master
