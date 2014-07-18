@@ -4,7 +4,8 @@ param (
 	[string]$compressor = "c:\Program Files\7-Zip\7z.exe",
 	[string]$comment = "New version"
  )
- 
+
+ if (Test-Path $zipname) { rm $zipname; }
 # Clean up binary folder since we will be generating new binaries
 rm ..\Binary\*.* -Force -Recurse
 
