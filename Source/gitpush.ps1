@@ -11,7 +11,7 @@ rm ..\Binary\*.* -Force -Recurse
 # build new version
 msbuild /verbosity:minimal $solution
 # Compress bin\debug and move to binary folder
-cmd /c $compressor a -tzip $zipname *.* 
+cmd /c for /D %f in ("*") DO "$compressor" a -tzip $zipname %f 
 cmd /c copy $zipname ..\Binary\ /Y
 
 cd ..
