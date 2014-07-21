@@ -42,7 +42,7 @@ function updatePlot() {
         for (var i = 0; i < val.data.length; i++)
             items.push([i, val.data[i]]);
 
-        var data = { label: val.label, color: val.color, data: items };
+        var data = { color: val.color, data: items };
 
         if (plots[index] != null) {
             plot = plots[index];
