@@ -64,7 +64,14 @@ You can see here the `AvgLogicalReads` for `QueryOrders` is very high. That stor
 ### Look ma, no AJAX!
 You will notice that the panels are refreshing periodically. You might think I am using AJAX to call some serverside web service in order to get JSON/XML response, and then use some jQuery template to render the html output. Nope. I am using what our ancestors have happily used for generations. The natural, organic IFRAME solution, with no side effect. The html output for each panel comes from individual ASP.NET pages, via IFRAMEs and then they get injected into a DIV on the main Dashboard page. 
 
-First the HTML markup to draw the panels:
+There are several benefits to this approach:
+
+ - The widgets are individual pages, which user can browse directly in full browser view. 
+ - Each widget is a plain ASP.NET page. No need to build webservices to return data in JSON/XML format. No need for any entity classes either that you usually use to serialize into JSON/XML.
+ - The HTML content is generated server side, using regular ASP.NET. Thus there's no need to use any Javascript based HTML templating library.
+ - As there's no need for AJAX or html templating, there's no need to worry about jQuery or its plugin breaking compatibility in new versions, and updating javascript libraries regularly. 
+
+Let's see how to do this. First the HTML markup to draw the panels:
 
     <div class="row">
     	<div class="panel panel-success">
