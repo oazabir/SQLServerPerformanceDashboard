@@ -138,7 +138,7 @@ There's a PerformanceCounter.aspx which is responsible for rendering the table s
         }
     })
     
-Now thi spage is hosted on the Dashboard page inside an IFRAME. So, the Dashboard page scans the IFRAME content, looks for these labels, picks their values and passes to the Flot chart plugin:
+Now this page is hosted on the Dashboard page inside an IFRAME. So, the Dashboard page scans the IFRAME content, looks for these labels, picks their values and passes to the Flot chart plugin:
 
     $(iframe).contents().find("form").find(".x-axis").each(function (i, e) {
         var x = $(e);
