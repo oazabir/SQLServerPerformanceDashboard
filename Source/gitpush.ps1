@@ -9,7 +9,7 @@ param (
  if (Test-Path $zipname) { rm $zipname; }
 # Clean up binary folder since we will be generating new binaries
 rm ..\Binary\*.* -Force -Recurse
-
+rm obj -Force -Recurse
 # build new version
 msbuild /verbosity:minimal $solution
 # Compress bin\debug and move to binary folder

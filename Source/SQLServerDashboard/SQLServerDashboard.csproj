@@ -57,6 +57,7 @@
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\dashboard.css" />
+    <Content Include="CurrentSessions.aspx" />
     <Content Include="DatabaseFiles.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="ExpensiveQueries.aspx" />
@@ -81,6 +82,13 @@
     <Content Include="WhoIsActive.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurrentSessions.aspx.cs">
+      <DependentUpon>CurrentSessions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CurrentSessions.aspx.designer.cs">
+      <DependentUpon>CurrentSessions.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,15 +6,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>SQL Server Health Monitor</title>
+    <script type="text/javascript">
+        function setContent() { /* stub to prevent IE11 from firing iframe onload prematurely. */ }
+    </script>
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/bootstrap-theme.min.css" rel="stylesheet" />
     <link href="css/basic.css" rel="stylesheet" />
     <link href="css/dashboard.css" rel="Stylesheet" />
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.simplemodal.js"></script>
-    <script src="js/jquery.flot.js"></script>    
-    <script type="text/javascript" src="js/Dashboard.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.simplemodal.js"></script>
+    <script type="text/javascript" src="js/jquery.flot.js"></script>    
+    <script type="text/javascript" src="js/Dashboard.js"></script>    
 </head>
 <body>
     <form id="form1" runat="server">
@@ -87,13 +90,13 @@
 
             <div class="row">
                 <div class="panel panel-success">
-                    <div class="panel-heading"><a href="WhoIsActive.aspx?c=<%= ConnectionString %>">What's going on</a></div>
+                    <div class="panel-heading"><a href="CurrentSessions.aspx?c=<%= ConnectionString %>">What's going on</a></div>
                     <div class="panel-body panel-body-height" id="WhoIsActive">
                         <div class="progress">
                             <div class="progress-bar progress-bar-striped" style="width: 60%"><span class="sr-only">100% Complete</span></div>
                         </div>
                     </div>
-                    <iframe class="content_loader" onload="setContent(this, 'WhoIsActive')" src="WhoIsActive.aspx?c=<%= ConnectionString %>" style="width: 100%; height: 100%; border: none; display: none" frameborder="0"></iframe>
+                    <iframe class="content_loader" onload="setContent(this, 'WhoIsActive')" src="CurrentSessions.aspx?c=<%= ConnectionString %>" style="width: 100%; height: 100%; border: none; display: none" frameborder="0"></iframe>
                 </div>
             </div>
 
