@@ -12,22 +12,22 @@
 <body>
     <form id="form1" runat="server">        
                 <asp:SqlDataSource ID="sqlDataSource" runat="server"  ProviderName="System.Data.SqlClient" SelectCommand="
-SELECT SPID,
+SELECT ER.session_id,
 	CAST(((DATEDIFF(s,start_time,GetDate()))/3600) as varchar) + ' hour(s), ' 
         + CAST((DATEDIFF(s,start_time,GetDate())%3600)/60 as varchar) + 'min, ' 
         + CAST((DATEDIFF(s,start_time,GetDate())%60) as varchar) + ' sec' as running_time, 
-	CPU,
-	DB_NAME(SP.DBID) AS DBNAME, 
-	ER.command,SP.status,
+	ER.cpu_time,
+	DB_NAME(ER.database_id), 
+	ER.command,
 	ER.blocking_session_id as Blocker, 
-	case when EXISTS(select 1 from sys.dm_exec_requests where blocking_session_id = SP.SPID) then 'Yes' else '' END AS Blocking,
-	LASTWAITTYPE,
+	case when EXISTS(select 1 from sys.dm_exec_requests r where r.blocking_session_id = session_id) then 'Yes' else '' END AS Blocking,
+	LAST_WAIT_TYPE,
 	SUBSTRING(est.text, (ER.statement_start_offset/2)+1,  
         ((CASE ER.statement_end_offset 
          WHEN -1 THEN DATALENGTH(est.text) 
          ELSE ER.statement_end_offset 
          END - ER.statement_start_offset)/2) + 1) AS QueryText,
-	HOSTNAME,LOGIN_TIME,LOGINAME,PROGRAM_NAME,
+	SS.HOST_NAME,SS.LOGIN_TIME,SS.LOGIN_NAME,SS.PROGRAM_NAME,
 /* This piece of code has been taken from article. Nice code to get time criteria's 
 http://beyondrelational.com/blogs/geniiius/archive/2011/11/01/backup-restore-checkdb-shrinkfile-progress.aspx 
 */     
@@ -36,14 +36,13 @@ http://beyondrelational.com/blogs/geniiius/archive/2011/11/01/backup-restore-che
         + CAST((estimated_completion_time %60000)/1000 as varchar) + ' sec' as est_time_to_go, 
     DATEADD(second,estimated_completion_time/1000, getdate()) as est_completion_time, 
 /* End of Article Code */       
-NT_DOMAIN, NT_USERNAME,
+
 TEXT
-FROM master..SYSPROCESSES SP  
-INNER JOIN sys.dm_exec_requests ER 
-ON sp.spid = ER.session_id 
+FROM sys.dm_exec_requests ER 
+INNER JOIN sys.dm_exec_sessions SS ON SS.session_id = ER.session_id
 CROSS APPLY SYS.DM_EXEC_SQL_TEXT(er.sql_handle) EST 
-WHERE SPID != @@SPID AND Command != 'WAITFOR' AND
-                     [LASTWAITTYPE] NOT IN (
+WHERE ER.session_id != @@SPID AND Command != 'WAITFOR' AND
+                     [LAST_WAIT_TYPE] NOT IN (
         N'BROKER_EVENTHANDLER',         N'BROKER_RECEIVE_WAITFOR',
         N'BROKER_TASK_STOP',            N'BROKER_TO_FLUSH',
         N'BROKER_TRANSMITTER',          N'CHECKPOINT_QUEUE',
@@ -79,8 +78,9 @@ WHERE SPID != @@SPID AND Command != 'WAITFOR' AND
     
 ORDER BY
 	Blocking DESC,
-	Status DESC,
-	CPU DESC    
+	SS.Status DESC,
+	CPU_TIME DESC  
+  
                     "></asp:SqlDataSource>
                 <asp:GridView CssClass="table table-striped" ID="GridView1" runat="server" DataSourceID="sqlDataSource" EnableModelValidation="True">                    
                     <EmptyDataTemplate>

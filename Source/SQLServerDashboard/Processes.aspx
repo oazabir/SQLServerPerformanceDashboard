@@ -30,7 +30,7 @@
 <body>
     <form id="form1" runat="server">        
                 <asp:SqlDataSource ID="sqlDataSource" runat="server"  ProviderName="System.Data.SqlClient" SelectCommand="
-SELECT 
+/*SELECT 
    SessionId    = s.session_id, 
    LastCommandBatch = (select text from sys.dm_exec_sql_text(c.most_recent_sql_handle)),
    TotalCPU_ms        = s.cpu_time, 
@@ -80,7 +80,48 @@ WHERE s.session_Id > 50                         -- ignore anything pertaining to
 
 AND s.session_Id NOT IN (@@SPID)     -- let's avoid our own query! :)
 
-ORDER BY DBInstance DESC, HeadBlocker desc, BlockBy desc, WaitType DESC, TotalCPU_ms desc;             
+ORDER BY DBInstance DESC, HeadBlocker desc, BlockBy desc, WaitType DESC, TotalCPU_ms desc;   */
+                    
+                   
+SELECT 
+   SessionId    = s.session_id, 
+   LastCommandBatch = (select text from sys.dm_exec_sql_text(c.most_recent_sql_handle)),
+   TotalCPU_ms        = s.cpu_time, 
+   UserProcess  = CONVERT(CHAR(1), s.is_user_process),
+   LoginInfo    = s.login_name,   
+   DbInstance   = ISNULL(db_name(r.database_id), N''), 
+   Command      = ISNULL(r.command, N''), 
+   App            = ISNULL(s.program_name, N''), 
+   (select top 1 q.blocking_session_id from sys.dm_exec_requests q where q.session_id = s.session_id) as BlockBy,
+   HeadBlocker  = 
+        CASE 
+            -- session has active request; is blocked; blocking others
+            WHEN r2.session_id IS NOT NULL AND r.blocking_session_id = 0 THEN 'Yes' 
+            -- session idle; has an open tran; blocking others
+            WHEN r.session_id IS NULL THEN 'Yes' 
+            ELSE ''
+        END,    
+   TotalPhyIO_mb    = (s.reads + s.writes) * 8 / 1024, 
+   MemUsage_kb        = s.memory_usage * 8192 / 1024, 
+   OpenTrans        = ISNULL(r.open_transaction_count,0), 
+   LoginTime        = s.login_time, 
+   LastReqStartTime = s.last_request_start_time,
+   HostName            = ISNULL(s.host_name, N''),
+   NetworkAddr        = ISNULL(c.client_net_address, N'')
+--   ExecContext        = ISNULL(t.exec_context_id, 0),
+--   ReqId            = ISNULL(r.request_id, 0),
+--   WorkLoadGrp        = N'',
+   
+FROM sys.dm_exec_sessions s LEFT OUTER JOIN sys.dm_exec_connections c ON (s.session_id = c.session_id)
+LEFT OUTER JOIN sys.dm_exec_requests r ON (s.session_id = r.session_id)
+LEFT OUTER JOIN sys.dm_exec_requests r2 ON (r.session_id = r2.blocking_session_id)
+OUTER APPLY sys.dm_exec_sql_text(r.sql_handle) as st
+
+WHERE s.session_Id > 50                         -- ignore anything pertaining to the system spids.
+
+AND s.session_Id NOT IN (@@SPID)     -- let's avoid our own query! :)
+
+ORDER BY DBInstance DESC, HeadBlocker desc, BlockBy desc, TotalCPU_ms desc;           
                     "></asp:SqlDataSource>
                 <asp:GridView CssClass="table table-striped" ID="GridView1" runat="server" DataSourceID="sqlDataSource" EnableModelValidation="True">
                     <Columns>
