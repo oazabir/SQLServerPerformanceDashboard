@@ -5,6 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
     <title>Processes</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/bootstrap-theme.min.css" rel="stylesheet" />    
@@ -84,11 +85,11 @@ ORDER BY DBInstance DESC, HeadBlocker desc, BlockBy desc, WaitType DESC, TotalCP
                     
                    
 SELECT 
+   LoginInfo    = s.login_name,   
    SessionId    = s.session_id, 
    LastCommandBatch = (select text from sys.dm_exec_sql_text(c.most_recent_sql_handle)),
    TotalCPU_ms        = s.cpu_time, 
    UserProcess  = CONVERT(CHAR(1), s.is_user_process),
-   LoginInfo    = s.login_name,   
    DbInstance   = ISNULL(db_name(r.database_id), N''), 
    Command      = ISNULL(r.command, N''), 
    App            = ISNULL(s.program_name, N''), 
@@ -128,7 +129,6 @@ ORDER BY DBInstance DESC, HeadBlocker desc, BlockBy desc, TotalCPU_ms desc;
                         <asp:TemplateField>
                             
                             <ItemTemplate>
-                                <%# Convert.ToInt32(Eval("WaitTime_ms")) > 1000 ? "<span class='label label-warning'>High Wait</span>" : "" %>                                
                                 <%# Convert.ToString(Eval("BlockBy")).Length > 1 ? "<span class='label label-warning'>Block</span>" : "" %>                                
                             </ItemTemplate>
                         </asp:TemplateField>
@@ -145,7 +145,7 @@ ORDER BY DBInstance DESC, HeadBlocker desc, BlockBy desc, TotalCPU_ms desc;
     <script>
         var refreshtimer = window.setTimeout(function () { window.location.reload(); }, 10000);
         $('tr').each(function (i, tr) {
-            var td = $('td:eq(2)', tr);
+            var td = $('td:eq(3)', tr);
             td.html('<div>' + td.html() + '</div>');
             td.addClass('large-cell');
             td.find('div').click(function () {

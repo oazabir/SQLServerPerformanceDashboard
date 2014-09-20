@@ -5,6 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
     <title>Who is Active</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/bootstrap-theme.min.css" rel="stylesheet" /> 
@@ -22,6 +23,7 @@
             cursor: hand;
             cursor: pointer                
         }
+        
     </style>
 </head>
 <body>

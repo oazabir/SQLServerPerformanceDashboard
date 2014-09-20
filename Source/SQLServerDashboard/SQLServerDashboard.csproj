@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Blocks.aspx" />
+    <Content Include="CPU.aspx" />
+    <Content Include="CPUTab.aspx" />
     <Content Include="css\basic.css" />
     <Content Include="css\basic_ie.css" />
     <Content Include="css\bootstrap-theme.css" />
@@ -58,30 +60,43 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\dashboard.css" />
     <Content Include="CurrentSessions.aspx" />
+    <Content Include="Dashboard.aspx" />
     <Content Include="DatabaseFiles.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="ExpensiveQueries.aspx" />
     <Content Include="ExpensiveStoredProc.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="HistoryTab.aspx" />
     <Content Include="img\basic\x.png" />
     <Content Include="InactiveSessions.aspx" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\Dashboard.js" />
     <Content Include="js\jquery-1.11.1.min.js" />
+    <Content Include="js\jquery.fixedheadertable.min.js" />
+    <Content Include="js\jquery.flot.baseline.js" />
     <Content Include="js\jquery.flot.js" />
+    <Content Include="js\jquery.flot.time.min.js" />
+    <Content Include="js\jquery.idletimer.js" />
     <Content Include="js\jquery.simplemodal.js" />
+    <Content Include="js\ScriptsForWidgets.js" />
     <Content Include="Processes.aspx" />
     <Content Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="PerformanceCounters.aspx" />
     <Content Include="Sessions.aspx" />
+    <Content Include="SessionsTab.aspx" />
+    <Content Include="Summary.aspx" />
     <Content Include="TestFlot.html" />
+    <Content Include="WaitsTab.aspx" />
     <Content Include="Web.config" />
     <Content Include="WhoIsActive.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CPU.ashx.cs">
+      <DependentUpon>CPU.ashx</DependentUpon>
+    </Compile>
     <Compile Include="CurrentSessions.aspx.cs">
       <DependentUpon>CurrentSessions.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -100,6 +115,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="CPU.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -122,7 +138,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>57301</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:57301/</IISUrl>
+          <IISUrl>http://localhost:5000/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

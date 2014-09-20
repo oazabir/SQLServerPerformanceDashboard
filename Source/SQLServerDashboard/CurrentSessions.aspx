@@ -4,6 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
     <title>Sessions</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/bootstrap-theme.min.css" rel="stylesheet" />
@@ -79,7 +80,7 @@ WHERE ER.session_id != @@SPID AND Command != 'WAITFOR' AND
 ORDER BY
 	Blocking DESC,
 	SS.Status DESC,
-	CPU_TIME DESC  
+	ER.CPU_TIME DESC  
   
                     "></asp:SqlDataSource>
                 <asp:GridView CssClass="table table-striped" ID="GridView1" runat="server" DataSourceID="sqlDataSource" EnableModelValidation="True">                    
@@ -89,9 +90,8 @@ ORDER BY
                     <Columns>
                         <asp:TemplateField>
                             <ItemTemplate>
-                                <%# Convert.ToInt32(Eval("CPU")) > 3000 ? "<span class='label label-warning'>High CPU</span>" : "" %>                                
-                                <%# Convert.ToInt32(Eval("Blocker")) > 0 ? "<span class='label label-warning'>Blocking</span>" : "" %>                                
-                                
+                                <%# Convert.ToInt32(Eval("CPU_TIME")) > 3000 ? "<span class='label label-warning'>High CPU</span>" : "" %>                                
+                                <%# Convert.ToInt32(Eval("Blocker")) > 0 ? "<span class='label label-warning'>Blocking</span>" : "" %>                                                                
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>      

@@ -1,30 +1,4 @@
-﻿var datasets = {
-    "Batch Requests/sec": {
-        label: "Batch Requests/sec",
-        data: initData(30),
-        color: 0,
-        ymax: 1000
-    },
-    "Full Scans/sec": {
-        label: "Full Scans/sec",
-        data: initData(30),
-        color: 1,
-        ymax: 100
-    },
-    "SQL Compilations/sec": {
-        label: "SQL Compilations/sec",
-        data: initData(30),
-        color: 2,
-        ymax: 100
-    },
-    "Total Latch Wait Time (ms)": {
-        label: "Total Latch Wait Time (ms)",
-        data: initData(30),
-        color: 3,
-        ymax: 3000
-    },
-};
-
+﻿
 var plots = [];
 
 function initData(count) {
@@ -35,6 +9,8 @@ function initData(count) {
 }
 
 function updatePlot() {
+    if (typeof $.plot == "undefined")
+        return;
     var index = 0;
 
     $.each(datasets, function (key, val) {
@@ -42,7 +18,7 @@ function updatePlot() {
         for (var i = 0; i < val.data.length; i++)
             items.push([i, val.data[i]]);
 
-        var data = { color: val.color, data: items };
+        var data = { color: val.color, data: items, threshold: val.threshold };
 
         if (plots[index] != null) {
             plot = plots[index];
@@ -75,7 +51,7 @@ function updatePlot() {
                     var x = item.datapoint[0].toFixed(2),
                         y = item.datapoint[1].toFixed(2);
 
-                    $("#tooltip").html(item.series.label + " = " + y)
+                    $("#tooltip").html(item.label + " = " + y)
                         .css({ top: item.pageY + 5, left: item.pageX + 5 })
                         .fadeIn(200);
                 } else {
@@ -90,11 +66,11 @@ function updatePlot() {
     });
 }
 
-function setContent(iframe, id) {
+window.setContent = function(iframe, id) {
     $('#' + id)
         .find('td.large-cell').off('click');
 
-    if ($('#' + id).scrollLeft() == 0) {
+    if ($('#' + id).scrollLeft() == 0 && $('#' + id).scrollTop() == 0) {
         $('#' + id)
             .html($(iframe).contents().find("form").html())
             .dblclick(function () {
@@ -103,24 +79,22 @@ function setContent(iframe, id) {
             .find('td.large-cell').find('div').click(function () {
                 $('#content_text').text($(this).html());
                 $('#basic-modal-content').modal();
-            });
+            });                   
     }
 
     $(iframe).contents().find("form").find(".x-axis").each(function (i, e) {
         var x = $(e);
         var y = x.next('.y-axis');
         var xname = x.text();
-        var yvalue = parseInt(y.text());
+        var yvalue = parseFloat(y.text());
         if (datasets[xname]) {
             var data = datasets[xname].data;
-
             data.pop();
-
             data.splice(0, 0, yvalue);
         }
     });
 
-    updatePlot();
+    updatePlot();   
 }
 
 $(document).ready(function () {
@@ -132,7 +106,5 @@ $(document).ready(function () {
         "background-color": "#fee",
         opacity: 0.80
     }).appendTo("body");
-
-    
-    updatePlot();
+    //updatePlot();
 });

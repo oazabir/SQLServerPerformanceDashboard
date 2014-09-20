@@ -5,7 +5,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
+    <title>Inactive Sessions</title>
 </head>
 <body>
         <form id="form1" runat="server">        

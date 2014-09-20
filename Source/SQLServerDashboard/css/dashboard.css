@@ -1,11 +1,24 @@
 ﻿.panel-body {
     padding: 0px;
-    overflow: auto;
+    overflow-x: auto;
     margin: 0px;
+}
+
+.noscroll {
+    overflow: visible;
+}
+
+.panel-padding {
+    padding: 10px;
 }
 
 .panel-body-height {
     max-height: 200px;
+    min-height: 100px;
+}
+
+.panel-body-height-large {
+    max-height: 400px;
     min-height: 100px;
 }
 
@@ -35,9 +48,10 @@ td.large-cell div {
     margin: 0px;
             
 }
+
 .demo-container {
     box-sizing: border-box;
-    width: 100%;
+    width: 95%;
     height: 200px;
     /*padding: 20px 15px 15px 15px;
     margin: 15px auto 30px auto;*/
@@ -56,8 +70,8 @@ td.large-cell div {
 }
 
 .demo-placeholder {
-    width: 100%;
-    height: 100%;
+    width: 95%;
+    height: 95%;
     font-size: 14px;
     line-height: 1.2em;
 }
@@ -66,3 +80,10 @@ td.large-cell div {
     border-spacing: 5px;
 }
     
+.tab_iframe {
+    width: 80%;
+    border: none;
+    overflow: hidden;
+    visibility:hidden;
+    position: absolute;
+}
