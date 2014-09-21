@@ -202,15 +202,15 @@ That's it! Again, no AJAX, no webservice, no html templating, no JSON plubing. P
 ## Conclusion
 SSPD tries to make it easy for us to monitor SQL Server health. It gives meainingful information out of the verbose data produced by SQL Server's built-in views. It shows you exactly where the problem is. You can customize the code anyway you like, adding your own warnings, own thresholds, and make it suit your specific need.
 
-  [1]: https://raw.githubusercontent.com/oazabir/SQLServerDashboard/master/Docs/Dashboard-800.png
-  [2]: https://github.com/oazabir/SQLServerDashboard/blob/master/Binary/SQLServerDashboard.zip?raw=true
-  [3]: https://github.com/oazabir/SQLServerDashboard
-  [4]: https://raw.githubusercontent.com/oazabir/SQLServerDashboard/master/Docs/WhatsGoingOn.png
+  [1]: https://raw.githubusercontent.com/oazabir/SQLServerPerformanceDashboard/master/Docs/Dashboard-800.png
+  [2]: https://github.com/oazabir/SQLServerPerformanceDashboard/blob/master/Binary/SQLServerDashboard.zip?raw=true
+  [3]: https://github.com/oazabir/SQLServerPerformanceDashboard
+  [4]: https://raw.githubusercontent.com/oazabir/SQLServerPerformanceDashboard/master/Docs/WhatsGoingOn.png
   [5]: http://sqlblog.com/blogs/adam_machanic/archive/2012/03/22/released-who-is-active-v11-11.aspx
-  [6]: https://raw.githubusercontent.com/oazabir/SQLServerDashboard/master/Docs/QueryDetailView.png
-  [7]: https://raw.githubusercontent.com/oazabir/SQLServerDashboard/master/Docs/MostExpensiveQueries.png
-  [8]: https://raw.githubusercontent.com/oazabir/SQLServerDashboard/master/Docs/ExpensiveStoredProc.png
+  [6]: https://raw.githubusercontent.com/oazabir/SQLServerPerformanceDashboard/master/Docs/QueryDetailView.png
+  [7]: https://raw.githubusercontent.com/oazabir/SQLServerPerformanceDashboard/master/Docs/MostExpensiveQueries.png
+  [8]: https://raw.githubusercontent.com/oazabir/SQLServerPerformanceDashboard/master/Docs/ExpensiveStoredProc.png
   [9]: http://getbootstrap.com/examples/theme/
   [10]: http://www.ericmmartin.com/projects/simplemodal/
   [11]: http://www.flotcharts.org/
-  [12]: https://raw.githubusercontent.com/oazabir/SQLServerDashboard/master/Docs/Graphs.png
+  [12]: https://raw.githubusercontent.com/oazabir/SQLServerPerformanceDashboard/master/Docs/Graphs.png
