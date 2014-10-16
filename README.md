@@ -7,8 +7,19 @@ SQL Server Performance Dashboard (SSPD) is a small website that shows you perfor
 ![enter image description here][1]
 
 ## Get the code
-The binaries are here, which you can just extract into a IIS folder, put the connection strings in the web.config file and you are ready to roll:
+The binaries are here, which you can just extract into a IIS folder, put the connection strings in the web.config file for a user that has elevated privilege, and you are done.
 [SqlServerDashboard GitHub Project Binaries][2]
+
+If you aren't using the sa user, but your own user, give the user the right permission:
+
+    USE master;
+    GO
+    GRANT VIEW SERVER STATE TO MyUser;
+    GO
+		
+Here's a sample connection string:
+		
+	<add name="DB1" connectionString="Data Source=.\SQLEXPRESS;Initial Catalog=YourDatabase;User ID=MyUser;Password=MyPassword" />
 
 Or you can get the source code from the GitHub project site:
 [https://github.com/oazabir/SQLServerDashboard][3]
