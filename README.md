@@ -7,8 +7,19 @@ SQL Server Performance Dashboard (SSPD) is a small website that shows you perfor
 ![enter image description here][1]
 
 ## Get the code
-The binaries are here, which you can just extract into a IIS folder, put the connection strings in the web.config file and you are ready to roll:
+The binaries are here, which you can just extract into a IIS folder, put the connection strings in the web.config file for a user that has elevated privilege, and you are done.
 [SqlServerDashboard GitHub Project Binaries][2]
+
+If you aren't using the sa user, but your own user, give the user the right permission:
+
+    USE master;
+    GO
+    GRANT VIEW SERVER STATE TO MyUser;
+    GO
+		
+Here's a sample connection string:
+		
+	<add name="DB1" connectionString="Data Source=.\SQLEXPRESS;Initial Catalog=YourDatabase;User ID=MyUser;Password=MyPassword" />
 
 Or you can get the source code from the GitHub project site:
 [https://github.com/oazabir/SQLServerDashboard][3]
@@ -202,15 +213,15 @@ That's it! Again, no AJAX, no webservice, no html templating, no JSON plubing. P
 ## Conclusion
 SSPD tries to make it easy for us to monitor SQL Server health. It gives meainingful information out of the verbose data produced by SQL Server's built-in views. It shows you exactly where the problem is. You can customize the code anyway you like, adding your own warnings, own thresholds, and make it suit your specific need.
 
-  [1]: https://raw.githubusercontent.com/oazabir/SQLServerDashboard/master/Docs/Dashboard-800.png
-  [2]: https://github.com/oazabir/SQLServerDashboard/blob/master/Binary/SQLServerDashboard.zip?raw=true
-  [3]: https://github.com/oazabir/SQLServerDashboard
-  [4]: https://raw.githubusercontent.com/oazabir/SQLServerDashboard/master/Docs/WhatsGoingOn.png
+  [1]: https://raw.githubusercontent.com/oazabir/SQLServerPerformanceDashboard/master/Docs/Dashboard-800.png
+  [2]: https://github.com/oazabir/SQLServerPerformanceDashboard/blob/master/Binary/SQLServerDashboard.zip?raw=true
+  [3]: https://github.com/oazabir/SQLServerPerformanceDashboard
+  [4]: https://raw.githubusercontent.com/oazabir/SQLServerPerformanceDashboard/master/Docs/WhatsGoingOn.png
   [5]: http://sqlblog.com/blogs/adam_machanic/archive/2012/03/22/released-who-is-active-v11-11.aspx
-  [6]: https://raw.githubusercontent.com/oazabir/SQLServerDashboard/master/Docs/QueryDetailView.png
-  [7]: https://raw.githubusercontent.com/oazabir/SQLServerDashboard/master/Docs/MostExpensiveQueries.png
-  [8]: https://raw.githubusercontent.com/oazabir/SQLServerDashboard/master/Docs/ExpensiveStoredProc.png
+  [6]: https://raw.githubusercontent.com/oazabir/SQLServerPerformanceDashboard/master/Docs/QueryDetailView.png
+  [7]: https://raw.githubusercontent.com/oazabir/SQLServerPerformanceDashboard/master/Docs/MostExpensiveQueries.png
+  [8]: https://raw.githubusercontent.com/oazabir/SQLServerPerformanceDashboard/master/Docs/ExpensiveStoredProc.png
   [9]: http://getbootstrap.com/examples/theme/
   [10]: http://www.ericmmartin.com/projects/simplemodal/
   [11]: http://www.flotcharts.org/
-  [12]: https://raw.githubusercontent.com/oazabir/SQLServerDashboard/master/Docs/Graphs.png
+  [12]: https://raw.githubusercontent.com/oazabir/SQLServerPerformanceDashboard/master/Docs/Graphs.png
