@@ -1,0 +1,1 @@
+﻿FIX: Summary.aspx: Write the query that will present correct summary

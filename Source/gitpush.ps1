@@ -3,6 +3,7 @@ param (
     [string]$zipname = "SQLServerDashboard.zip",
 	[string]$compressor = "c:\Program Files\7-Zip\7z.exe",
 	[string]$folder = "SQLServerDashboard",
+	[string]$binFolder = "SQLServerDashboard\bin",
 	[string]$deployPath = "..\Binary",
 	[string]$commitFrom = "..",
 	[Parameter(Mandatory=$true)][string]$comment
@@ -25,17 +26,13 @@ if ($vsProcess.Length -gt 0) {
  
 Push-Location
  
-
 if (Test-Path $zipname) { rm $zipname; }
 
 # Clean up deploy folder 
 rm $deployPath\*.* -Force -Recurse
 
-# Build new version
-msbuild /verbosity:minimal $solution
-
-# Delete obj
-if (Test-Path $folder\obj) { rm $folder\obj -Force -Recurse }
+# Remove the config from the bin folder
+if (Test-Path $binFolder\*.config) { rm $binFolder\*.config }
 
 # backup the web.config and remove sensitive entries before pushing to git, eg connectionString
 [string]$filename = gi $folder\web.config 
@@ -44,7 +41,7 @@ $xml = [xml]$backup
 $xml.PreserveWhitespace = $true
 foreach($n in $xml.configuration.connectionStrings.add) 
 { 
-	$n.connectionString = "" 
+	$n.ParentNode.RemoveChild($n);
 }  
 
 # Anonymize any sensitive appSettings entry
@@ -61,19 +58,32 @@ $xml.configuration.'system.web'.authorization.RemoveAll()
 
 $xml.Save($filename)
 
+# verify if web.config still contains any sensitive info
+[string]$config = gc $folder\web.config
+if ( ($config -match 'connectionString="\w+') -or ($config -match 'users="\w+') ) {
+	Write-Host "Configuration file is not cleaned."
+	# Restore web.config
+	[System.IO.File]::WriteAllText($filename, $backup)
+	Exit
+}
 
-
-# build new version
+# Build new version
 msbuild /verbosity:minimal $solution
-# Compress bin\debug and move to binary folder
-cmd /c $compressor a -tzip $zipname $folder -r 
-cmd /c copy $zipname ..\Binary\ /Y
 
-cd ..
+# Delete obj
+if (Test-Path $folder\obj) { rm $folder\obj -Force -Recurse }
+
+# Compress the solution folder and copy to deploy folder
+cmd /c $compressor a -tzip $zipname $folder -r 
+cmd /c copy $zipname $deployPath /Y
+cmd /c del $zipname
+
+# Commit and push to GitHub
+cd $commitFrom
 git pull
 git add -A *.*
 git commit -a -m $comment
-git push origin master
+git push 
 Pop-Location
 
 # Restore web.config

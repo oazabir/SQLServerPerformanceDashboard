@@ -43,9 +43,24 @@
         </div>
 
         <div class="container">
-            <h1><%= ConnectionString %></h1>
-            
-            
+            <asp:Repeater ID="Repeater" runat="server">
+                <ItemTemplate>
+                    <div class="col-sm-4">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <a href="Dashboard.aspx?c=<%# Eval("Name") %>"><%# Eval("Name") %></a>
+                                </h3>
+                            </div>
+                            <div class="panel-body noscroll panel-padding">
+                                <iframe id="cpuIframe" src="CPU.aspx?c=<%# Eval("Name") %>" class="tab_iframe" scrolling="no" style="visibility: visible; position:relative;"></iframe>
+                                <div id="summary_<%# Convert.ToString(Eval("Name")).Replace(" ", "_") %>"></div>
+                                <iframe id="summaryIframe" onload="setContent(this, 'summary_<%# Convert.ToString(Eval("Name")).Replace(" ", "_") %>')" src="Summary.aspx?c=<%# Eval("Name") %>" class="tab_iframe" scrolling="no" style="display:none" ></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
         </div>
     </form>
 

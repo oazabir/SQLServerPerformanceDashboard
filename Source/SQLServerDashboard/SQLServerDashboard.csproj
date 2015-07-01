@@ -89,6 +89,7 @@
     <Content Include="SessionsTab.aspx" />
     <Content Include="Summary.aspx" />
     <Content Include="TestFlot.html" />
+    <Content Include="Todo.txt" />
     <Content Include="WaitsTab.aspx" />
     <Content Include="Web.config" />
     <Content Include="WhoIsActive.aspx" />

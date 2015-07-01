@@ -17,7 +17,7 @@
 </head>
 <body>
     <form id="form1" runat="server">               
-                <asp:SqlDataSource ID="sqlDataSource" runat="server"  ProviderName="Oracle.ManagedDataAccess.Client" SelectCommand="
+                <asp:SqlDataSource ID="sqlDataSource" runat="server"  ProviderName="System.Data.SqlClient" SelectCommand="
 
 SELECT 'Block' as Name, (select 
    nvl(sum(seconds_in_wait),0)
